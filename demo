@@ -1,0 +1,15 @@
+read_image (ModelImage, 'rings_and_nuts')
+gen_rectangle1 (ROI_0, 234.84, 42.5252, 396.782, 174.962)
+reduce_domain(ModelImage, ROI_0, ImageReduced)
+create_aniso_shape_model(ImageReduced, 'auto', rad(-40), rad(90),\
+                         'auto', 0.5, 1.1, 'auto', 0.5, 1.1, \
+                         'auto', 'auto', 'use_polarity', 'auto', 'auto', ModelID)
+get_shape_model_contours(ModelContours, ModelID, 1)
+area_center(ROI_0, Area, Row, Column)
+vector_angle_to_rigid(0, 0, 0, Row, Column, 0, HomMat2D)
+affine_trans_contour_xld(ModelContours, ContoursAffinTrans, HomMat2D)
+dev_clear_window()
+dev_display(ModelImage)
+find_aniso_shape_model(ModelImage, ModelID, rad(-40), rad(90), 0.5, 1.1,\
+                       0.5, 1.1, 0.7, 0, 0.5, 'least_squares', 4, 0.9,\
+                       Row1, Column1, Angle, ScaleR, ScaleC, Score)
